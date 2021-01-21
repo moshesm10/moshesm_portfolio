@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+.glass-block {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 440px;
+  height: 84px;
+  left: 0px;
+  top: 10vh;
+  background: radial-gradient(100% 100% at 0% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-backdrop-filter: blur(42px);
+  backdrop-filter: blur(42px);
+  /* Note: backdrop-filter has minimal browser support */
+  border-radius: 0px 40px 40px 0px; }
+  .glass-block__icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1; }
+    .glass-block__icons li {
+      list-style: none; }
+      .glass-block__icons li:hover path {
+        fill: #998a97; }
+
+.test-block {
+  position: absolute;
+  visibility: hidden;
+  padding-top: 10px; }
+
+.wrapper {
+  width: 300px;
+  height: 200px; }
