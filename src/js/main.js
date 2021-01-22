@@ -63,30 +63,44 @@ const canvas = (Matter, windowWidth, windowHeight) => {
     };
 
     // == Edges ==
+    const wallWidth = 100;
+    
     World.add(world, [
         // x y width height
-        Bodies.rectangle(windowWidth / 2, windowHeight + 50, windowWidth, 100, { isStatic: true }), //bottom rectangle
-        Bodies.rectangle(windowWidth / 2, -50, windowWidth, 100, { isStatic: true }), //top rectangle
-        Bodies.rectangle(-50, windowHeight/2, 100, windowHeight, { isStatic: true }), //left rectangle
-        Bodies.rectangle(windowWidth + 50, windowHeight/2, 100, windowHeight, { isStatic: true }), //right rectangle
+        
+        Bodies.rectangle(windowWidth / 2, windowHeight + 50, windowWidth, wallWidth, { isStatic: true }), //bottom rectangle
+        Bodies.rectangle(windowWidth / 2, -50, windowWidth, wallWidth, { isStatic: true }), //top rectangle
+        Bodies.rectangle(-50, windowHeight/2, wallWidth, windowHeight, { isStatic: true }), //left rectangle
+        Bodies.rectangle(windowWidth + 50, windowHeight/2, wallWidth, windowHeight, { isStatic: true }), //right rectangle
     ]);
 
     // == size variables ==
     const bodySize = (type) => {
         let size = 0,
-            multiplier = 0.7;
+            multiplier = 1;
 
-        if (windowWidth < 767) {
-            multiplier = 0.4;
-        }
-        if (windowWidth >= 768 && windowWidth <= 850) {
+        if (windowWidth < 420) {
             multiplier = 0.6;
         }
+
+        if (windowWidth < 330) {
+            multiplier = 0.5;
+        }
+
+        // For smartphones landscape orientation
+        if (windowWidth > windowHeight && windowHeight < 420) {
+                multiplier = 0.6;
+    
+            if (windowHeight < 330) {
+                multiplier = 0.5;
+            }
+        }
+ 
         switch (type) {
             case 'circle':
-                size = 250 * multiplier;
+                size = 120 * multiplier;
                 break;
-            case 'svg':
+            case 'default':
                 break;
         }
 
@@ -119,15 +133,15 @@ const svgRender = (svgLink, svgTextureLink, xPos, yPos, link) => {
             svgWrapper.innerHTML = data;
 
             const svgPath = svgWrapper.querySelector('path'),
-                  vertexSets = Vertices.scale(Vertices.hull(Svg.pathToVertices(svgPath, 1000)), bodySize('svg').multiplier, bodySize('svg').multiplier);
+                  vertexSets = Vertices.scale(Vertices.hull(Svg.pathToVertices(svgPath, 1000)), bodySize().multiplier, bodySize().multiplier);
 
             const svgElement = Bodies.fromVertices(xPos, yPos, vertexSets, {
                 restitution: 0.5,
                 render: {
                     sprite: {
                         texture: svgTextureLink,
-                        xScale: bodySize('svg').multiplier,
-                        yScale: bodySize('svg').multiplier
+                        xScale: bodySize().multiplier,
+                        yScale: bodySize().multiplier
                     }
                 }
             }, true);
@@ -139,11 +153,11 @@ const svgRender = (svgLink, svgTextureLink, xPos, yPos, link) => {
         });
 };
 
-svgRender('../img/imageuploadersvg.svg', '../img/imageuploader.png', windowWidth / 4, windowWidth / 4, 'http://a0413857.xsph.ru/image-uploader/');
-svgRender('../img/windbnbsvg.svg', '../img/windbnb.png', windowWidth / 2, windowWidth / 2, 'http://a0413857.xsph.ru/windbnb/');
-svgRender('../img/mainsvg.svg', '../img/main.png', windowWidth / 4, windowWidth / 4, 'https://github.com/moshesm10');
-    
+svgRender('../img/imguploadersvg.svg', '../img/imguploader.png', windowWidth / 2, windowWidth / 2, 'http://a0413857.xsph.ru/image-uploader/');
+svgRender('../img/windbnbsvg.svg', '../img/windbnb.png', windowWidth / 6, windowWidth / 6, 'http://a0413857.xsph.ru/windbnb/');
+svgRender('../img/mainsvg.svg', '../img/main.png', windowWidth / 3, windowWidth / 3, 'https://github.com/moshesm10');
+svgRender('../img/tctlsvg.svg', '../img/tctl.png', windowWidth / 4, windowWidth / 4, 'https://github.com/moshesm10');
+svgRender('../img/schoolgurusvg.svg', '../img/schoolguru.png', windowWidth / 5, windowWidth / 5, 'https://github.com/moshesm10');
 };
-
 
 export default canvas;
