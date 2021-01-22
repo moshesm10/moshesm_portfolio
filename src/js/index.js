@@ -6,12 +6,12 @@ let windowWidth = document.documentElement.clientWidth,
 
 canvas(Matter, windowWidth, windowHeight);
 
-// resize handler
+// == Resize handler ==
 window.addEventListener('resize', (e) => {
     windowWidth = document.documentElement.clientWidth;
     windowHeight = document.documentElement.clientHeight;
     
-    // canvas reload optimization
+    // == Canvas reload optimization ==
     if (e.timeStamp % 2 == 0) {
         document.querySelector('canvas').remove()
 

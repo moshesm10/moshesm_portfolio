@@ -3,18 +3,29 @@
     padding: 0;
 }
 
+// == Screen size ==
+$screen-xs-min: 340px;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+$screen-xs-max: 575px;
+$screen-sm-max: 767px;
+$screen-md-max: 991px;
+$screen-lg-max: 1199px;
+
 .glass-block {
+    position: absolute;
     display: flex;
     justify-content: center;
-    position: absolute;
     width: 440px;
     height: 84px;
-    left: 0px;
+    left: 0;
     top: 10vh;
 
     background: radial-gradient(100% 100% at 0% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
     backdrop-filter: blur(42px);
-    /* Note: backdrop-filter has minimal browser support */
     border-radius: 0px 40px 40px 0px;
 
     &__icons {
@@ -31,14 +42,20 @@
             }
         }
     }
-}
 
-.test-block {
-    position: absolute;
-    visibility: hidden;
-    padding-top: 10px;
-}
-.wrapper {
-    width: 300px;
-    height: 200px;
+    @media (max-width: $screen-xs-max) {
+        width: 345px;
+    }
+
+    @media (max-width: $screen-xs-min) {
+        width: 300px;
+
+        &__icons {
+            & li {
+                svg {
+                    width: 50px;
+                }
+            }
+        }
+    }
 }

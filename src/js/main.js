@@ -12,11 +12,11 @@ const canvas = (Matter, windowWidth, windowHeight) => {
           Events = Matter.Events,
           Bodies = Matter.Bodies;
     
-    // create engine
+    // == Create engine ==
     const engine = Engine.create(),
         world = engine.world;
 
-    // create renderer
+    // == Create renderer ==
     const render = Render.create({
         element: document.body,
         engine: engine,
@@ -32,11 +32,11 @@ const canvas = (Matter, windowWidth, windowHeight) => {
 
     Render.run(render);
 
-    // create runner
+    // == Create runner ==
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    // add mouse control
+    // == Add mouse control ==
     const mouse = Mouse.create(render.canvas),
         mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
@@ -49,7 +49,7 @@ const canvas = (Matter, windowWidth, windowHeight) => {
         });
     World.add(world, mouseConstraint);
 
-    // add click handler
+    // == Click handler ==
     const clickHandler = (id, link) => {
         Events.on(mouseConstraint, "enddrag", (e) => {
             const down = e.source.mouse.mousedownPosition,
@@ -67,18 +67,20 @@ const canvas = (Matter, windowWidth, windowHeight) => {
     
     World.add(world, [
         // x y width height
-        
         Bodies.rectangle(windowWidth / 2, windowHeight + 50, windowWidth, wallWidth, { isStatic: true }), //bottom rectangle
         Bodies.rectangle(windowWidth / 2, -50, windowWidth, wallWidth, { isStatic: true }), //top rectangle
         Bodies.rectangle(-50, windowHeight/2, wallWidth, windowHeight, { isStatic: true }), //left rectangle
         Bodies.rectangle(windowWidth + 50, windowHeight/2, wallWidth, windowHeight, { isStatic: true }), //right rectangle
     ]);
 
-    // == size variables ==
+    // == Size variables ==
     const bodySize = (type) => {
         let size = 0,
             multiplier = 1;
-
+        if (windowWidth < 1000) {
+            multiplier = 0.9;
+        }
+        
         if (windowWidth < 420) {
             multiplier = 0.6;
         }
@@ -87,7 +89,7 @@ const canvas = (Matter, windowWidth, windowHeight) => {
             multiplier = 0.5;
         }
 
-        // For smartphones landscape orientation
+        // == For smartphones landscape orientation ==
         if (windowWidth > windowHeight && windowHeight < 420) {
                 multiplier = 0.6;
     
@@ -110,7 +112,7 @@ const canvas = (Matter, windowWidth, windowHeight) => {
             };
     };
 
-    // == elements ==
+    // == Elements ==
     const bonds = Bodies.circle(windowWidth / 2, windowHeight / 2, bodySize('circle').size, {
         restitution: 0.5,
         render: {
@@ -146,18 +148,18 @@ const svgRender = (svgLink, svgTextureLink, xPos, yPos, link) => {
                 }
             }, true);
 
-            // add click event
+            // == Click event ==
             clickHandler(svgElement.id, link);
 
             World.add(world, svgElement);
         });
 };
 
-svgRender('../img/imguploadersvg.svg', '../img/imguploader.png', windowWidth / 2, windowWidth / 2, 'http://a0413857.xsph.ru/image-uploader/');
-svgRender('../img/windbnbsvg.svg', '../img/windbnb.png', windowWidth / 6, windowWidth / 6, 'http://a0413857.xsph.ru/windbnb/');
+svgRender('../img/imguploadersvg.svg', '../img/imguploader.png', windowWidth / 2, windowWidth / 2, 'https://moshesm.ru/image-uploader/');
+svgRender('../img/windbnbsvg.svg', '../img/windbnb.png', windowWidth / 6, windowWidth / 6, 'https://moshesm.ru/windbnb/');
 svgRender('../img/mainsvg.svg', '../img/main.png', windowWidth / 3, windowWidth / 3, 'https://github.com/moshesm10');
-svgRender('../img/tctlsvg.svg', '../img/tctl.png', windowWidth / 4, windowWidth / 4, 'https://github.com/moshesm10');
-svgRender('../img/schoolgurusvg.svg', '../img/schoolguru.png', windowWidth / 5, windowWidth / 5, 'https://github.com/moshesm10');
+svgRender('../img/tctlsvg.svg', '../img/tctl.png', windowWidth / 4, windowWidth / 4, 'https://moshesm.ru/tctl/');
+svgRender('../img/schoolgurusvg.svg', '../img/schoolguru.png', windowWidth / 5, windowWidth / 5, 'https://school-guru.ru');
 };
 
 export default canvas;
